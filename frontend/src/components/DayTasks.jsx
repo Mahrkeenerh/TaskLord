@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { TaskForm } from './TaskForm';
 import { Modal } from './Modal';
+import { Trash2, Edit2 } from 'lucide-react';
 
 // Task Item Component
 const TaskItem = ({ task, project, onEdit, onDelete }) => (
     <div className="p-3 bg-gray-700 rounded-lg">
-        <div className="flex justify-between">
+        <div className="flex justify-between items-start">
             <div>
                 <div className="font-medium">
                     {task.title}
@@ -22,23 +23,23 @@ const TaskItem = ({ task, project, onEdit, onDelete }) => (
                     </div>
                 )}
             </div>
-            <div className="text-sm text-gray-400 ml-2">
-                {task.hours} hour{task.hours !== 1 ? 's' : ''}
+            <div className="flex items-center space-x-2 ml-4">
+                <div className="text-sm text-gray-400">
+                    {task.hours} hour{task.hours !== 1 ? 's' : ''}
+                </div>
+                <button
+                    className="text-blue-600 hover:text-blue-500"
+                    onClick={() => onEdit(task)}
+                >
+                    <Edit2 size={16} />
+                </button>
+                <button
+                    className="text-red-600 hover:text-red-500"
+                    onClick={() => onDelete(task.id)}
+                >
+                    <Trash2 size={16} />
+                </button>
             </div>
-        </div>
-        <div className="flex justify-end mt-2 space-x-2">
-            <button
-                className="text-blue-500 hover:text-blue-300"
-                onClick={() => onEdit(task)}
-            >
-                Edit
-            </button>
-            <button
-                className="text-red-500 hover:text-red-300"
-                onClick={() => onDelete(task.id)}
-            >
-                Delete
-            </button>
         </div>
     </div>
 );
