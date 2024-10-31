@@ -156,7 +156,7 @@ const App = () => {
                     )}
 
                     {isManageWindowActive && (
-                        <Modal onClose={() => setIsManageWindowActive(false)} photoMode={photoMode}>
+                        <Modal onClose={() => setIsManageWindowActive(false)} photoMode={photoMode} size="large">
                             <ProjectSettings
                                 projects={projects}
                                 clients={clients}

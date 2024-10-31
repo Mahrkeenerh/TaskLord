@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Trash2, Edit2 } from 'lucide-react';
 
-// Constants
 const INITIAL_PROJECT_FORM = {
     id: '',
     name: '',
@@ -16,7 +15,6 @@ const INITIAL_CLIENT_FORM = {
     logo_path: ''
 };
 
-// Styled Components
 const StyledCard = ({ photoMode, children }) => {
     const className = photoMode
         ? "flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg"
@@ -49,7 +47,6 @@ const Label = ({ photoMode, children }) => {
     return <label className={className}>{children}</label>;
 };
 
-// Project List Component
 const ProjectList = ({ projects, photoMode, onEdit, onDelete }) => (
     <div className="grid gap-2">
         {projects.map(project => (
@@ -75,7 +72,6 @@ const ProjectList = ({ projects, photoMode, onEdit, onDelete }) => (
     </div>
 );
 
-// Client List Component
 const ClientList = ({ clients, photoMode, onEdit, onDelete }) => (
     <div className="grid gap-2">
         {clients.map(client => (
@@ -103,7 +99,6 @@ const ClientList = ({ clients, photoMode, onEdit, onDelete }) => (
     </div>
 );
 
-// Project Form Component
 const ProjectForm = ({ formData, setFormData, clients, photoMode, onSubmit, isEditing }) => (
     <form onSubmit={onSubmit} className="space-y-4">
         <h3 className={`font-medium ${photoMode ? "text-gray-800" : ""}`}>
@@ -166,7 +161,6 @@ const ProjectForm = ({ formData, setFormData, clients, photoMode, onSubmit, isEd
     </form>
 );
 
-// Client Form Component
 const ClientForm = ({ formData, setFormData, photoMode, onSubmit, isEditing, onLogoChange }) => (
     <form onSubmit={onSubmit} className="space-y-4">
         <h3 className={`font-medium ${photoMode ? "text-gray-800" : ""}`}>
@@ -207,7 +201,6 @@ const ClientForm = ({ formData, setFormData, photoMode, onSubmit, isEditing, onL
     </form>
 );
 
-// Main Component
 export const ProjectSettings = ({
     projects,
     clients,
@@ -297,43 +290,51 @@ export const ProjectSettings = ({
                 Manage
             </h2>
 
-            <div className="space-y-4">
-                <h3 className={`font-medium ${photoMode ? "text-gray-800" : ""}`}>Current Projects</h3>
-                <ProjectList
-                    projects={projects}
-                    photoMode={photoMode}
-                    onEdit={handleEditProject}
-                    onDelete={handleDeleteProject}
-                />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-full">
+                {/* Projects Column */}
+                <div className="space-y-6 min-w-0">
+                    <div className="space-y-4">
+                        <h3 className={`font-medium ${photoMode ? "text-gray-800" : ""}`}>Projects</h3>
+                        <ProjectList
+                            projects={projects}
+                            photoMode={photoMode}
+                            onEdit={handleEditProject}
+                            onDelete={handleDeleteProject}
+                        />
+                    </div>
+
+                    <ProjectForm
+                        formData={projectFormData}
+                        setFormData={setProjectFormData}
+                        clients={clients}
+                        photoMode={photoMode}
+                        onSubmit={handleProjectSubmit}
+                        isEditing={!!editingProject}
+                    />
+                </div>
+
+                {/* Clients Column */}
+                <div className="space-y-6 min-w-0">
+                    <div className="space-y-4">
+                        <h3 className={`font-medium ${photoMode ? "text-gray-800" : ""}`}>Clients</h3>
+                        <ClientList
+                            clients={clients}
+                            photoMode={photoMode}
+                            onEdit={handleEditClient}
+                            onDelete={handleDeleteClient}
+                        />
+                    </div>
+
+                    <ClientForm
+                        formData={clientFormData}
+                        setFormData={setClientFormData}
+                        photoMode={photoMode}
+                        onSubmit={handleClientSubmit}
+                        isEditing={!!editingClient}
+                        onLogoChange={handleLogoChange}
+                    />
+                </div>
             </div>
-
-            <ProjectForm
-                formData={projectFormData}
-                setFormData={setProjectFormData}
-                clients={clients}
-                photoMode={photoMode}
-                onSubmit={handleProjectSubmit}
-                isEditing={!!editingProject}
-            />
-
-            <div className="space-y-4">
-                <h3 className={`font-medium ${photoMode ? "text-gray-800" : ""}`}>Current Clients</h3>
-                <ClientList
-                    clients={clients}
-                    photoMode={photoMode}
-                    onEdit={handleEditClient}
-                    onDelete={handleDeleteClient}
-                />
-            </div>
-
-            <ClientForm
-                formData={clientFormData}
-                setFormData={setClientFormData}
-                photoMode={photoMode}
-                onSubmit={handleClientSubmit}
-                isEditing={!!editingClient}
-                onLogoChange={handleLogoChange}
-            />
         </div>
     );
 };
