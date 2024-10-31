@@ -35,6 +35,7 @@ export const TaskForm = ({
         project_id: initialTask?.project_id || '',
         date: initialTask?.date || selectedDate,
         hours: initialTask?.hours || '',
+        title: initialTask?.title || '',
         notes: initialTask?.notes || '',
         recurring: initialTask?.recurring || ''
     });
@@ -77,9 +78,6 @@ export const TaskForm = ({
         onSubmit(submissionData);
     };
 
-    // Only show recurring field if:
-    // 1. It's a new task OR
-    // 2. It's an existing recurring task
     const shouldShowRecurring = !initialTask || initialTask.recurring;
 
     return (
@@ -134,6 +132,16 @@ export const TaskForm = ({
                 />
             </FormField>
 
+            <FormField label="Title">
+                <input
+                    type="text"
+                    value={formData.title}
+                    onChange={handleChange('title')}
+                    className={formStyles.input}
+                    required
+                />
+            </FormField>
+
             <FormField label="Notes">
                 <textarea
                     value={formData.notes}
@@ -151,14 +159,12 @@ export const TaskForm = ({
                         className={formStyles.select}
                     >
                         {!initialTask ? (
-                            // New task - show all options
                             Object.values(RECURRING_OPTIONS).map(option => (
                                 <option key={option.value} value={option.value}>
                                     {option.label}
                                 </option>
                             ))
                         ) : (
-                            // Editing recurring task - show current option and not recurring
                             [
                                 RECURRING_OPTIONS.NONE,
                                 {
@@ -203,6 +209,7 @@ TaskForm.propTypes = {
         project_id: PropTypes.string,
         date: PropTypes.string,
         hours: PropTypes.number,
+        title: PropTypes.string,
         notes: PropTypes.string,
         recurring: PropTypes.string
     })

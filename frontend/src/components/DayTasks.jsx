@@ -7,16 +7,25 @@ const TaskItem = ({ task, project, onEdit, onDelete }) => (
     <div className="p-3 bg-gray-700 rounded-lg">
         <div className="flex justify-between">
             <div>
-                {project?.name}
-                {task.recurring && (
-                    <span className="ml-2 text-blue-400">({task.recurring})</span>
+                <div className="font-medium">
+                    {task.title}
+                    {task.recurring && (
+                        <span className="ml-2 text-blue-400">({task.recurring})</span>
+                    )}
+                </div>
+                <div className="text-sm" style={{ color: project.color, fontWeight: 'bold' }}>
+                    {project.name}
+                </div>
+                {task.notes && (
+                    <div className="text-sm text-gray-400 mt-1">
+                        {task.notes}
+                    </div>
                 )}
             </div>
-            <div className="text-sm text-gray-400">
+            <div className="text-sm text-gray-400 ml-2">
                 {task.hours} hour{task.hours !== 1 ? 's' : ''}
             </div>
         </div>
-        <div className="text-sm text-gray-400 mt-1">{task.notes}</div>
         <div className="flex justify-end mt-2 space-x-2">
             <button
                 className="text-blue-500 hover:text-blue-300"

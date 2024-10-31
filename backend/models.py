@@ -9,6 +9,7 @@ class Task:
     client_id: str
     date: str
     hours: float
+    title: str
     notes: str = ""
     recurring: Optional[str] = None
     id: str = None
@@ -26,6 +27,7 @@ class Task:
             "client_id": self.client_id,
             "date": self.date,
             "hours": self.hours,
+            "title": self.title,
             "notes": self.notes,
             "recurring": self.recurring,
             "deleted": self.deleted
@@ -38,6 +40,7 @@ class Task:
         self.project_id = task.project_id
         self.client_id = task.client_id
         self.hours = task.hours
+        self.title = task.title
         self.notes = task.notes
         self.recurring = task.recurring
 

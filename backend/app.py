@@ -31,6 +31,7 @@ def add_task():
         client_id=data['client_id'],
         date=data['date'],
         hours=float(data['hours']),
+        title=data['title'],
         notes=data.get('notes', ''),
         recurring=data.get('recurring', None)
     )
@@ -51,6 +52,7 @@ def manage_task(task_id):
         client_id=data['client_id'],
         date=data['date'],
         hours=float(data['hours']),
+        title=data['title'],
         notes=data.get('notes', ''),
         recurring=data.get('recurring', None)
     )

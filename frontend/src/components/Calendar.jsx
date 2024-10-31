@@ -48,10 +48,10 @@ const CalendarDay = ({ date, tasks, isSelected, isToday, onClick, photoMode, pro
             onClick={onClick}
             className={`aspect-square ${photoMode
                 ? 'border border-gray-200'
-                : 'border border-gray-700 hover:bg-gray-600'
+                : 'border border-gray-700'
                 } p-2 rounded relative ${isSelected && !photoMode
                     ? 'bg-blue-600 text-white hover:bg-blue-600'
-                    : isToday && !photoMode ? 'bg-gray-700' : ''
+                    : isToday && !photoMode ? 'bg-gray-700 hover:bg-gray-600' : 'hover:bg-gray-600'
                 }`}
         >
             <span className="absolute top-1 left-2">{date.getDate()}</span>
@@ -66,8 +66,9 @@ const CalendarDay = ({ date, tasks, isSelected, isToday, onClick, photoMode, pro
                             key={task.id}
                             className="text-xs truncate px-1 py-0.5 rounded text-white"
                             style={{ backgroundColor: project?.color || '#FF0000' }}
+                            title={task.notes ? `${task.title} - ${task.notes}` : task.title}
                         >
-                            {task.notes}: {task.hours}h
+                            {task.title}: {task.hours}h
                         </div>
                     );
                 })}

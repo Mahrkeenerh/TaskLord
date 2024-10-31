@@ -175,6 +175,7 @@ class Storage:
                     client_id=task.client_id,
                     date=current_date.strftime("%Y-%m-%d"),
                     hours=task.hours,
+                    title=task.title,
                     notes=task.notes,
                     recurring=task.recurring
                 )
