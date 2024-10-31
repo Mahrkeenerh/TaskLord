@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles on top of Tailwind */
+body {
+    @apply bg-gray-900 text-gray-100;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+    @apply bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-gray-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500;
+}
+
+/* Calendar day hover effects */
+.calendar-day:hover .task-list {
+    @apply opacity-100;
+}
+
+/* Input focus styles */
+input:focus,
+select:focus,
+textarea:focus {
+    @apply outline-none ring-2 ring-blue-500;
+}
+
+/* Animation for modal */
+.modal-enter {
+    @apply opacity-0 scale-95;
+}
+
+.modal-enter-active {
+    @apply opacity-100 scale-100;
+    transition: opacity 200ms, transform 200ms;
+}
+
+.modal-exit {
+    @apply opacity-100 scale-100;
+}
+
+.modal-exit-active {
+    @apply opacity-0 scale-95;
+    transition: opacity 200ms, transform 200ms;
+}
+
+/* Toast notifications */
+.toast {
+    @apply fixed bottom-4 right-4 px-4 py-2 rounded-lg shadow-lg;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* TaskLord specific branding */
+.tasklord-logo {
+    @apply text-2xl font-bold text-transparent bg-clip-text;
+    background-image: linear-gradient(to right, #3B82F6, #60A5FA);
+}
+
+/* Loading spinner */
+.spinner {
+    @apply w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin;
+}
