@@ -17,6 +17,7 @@ const App = () => {
     const [projects, setProjects] = useState([]);
     const [clients, setClients] = useState([]);
     const [isTaskWindowActive, setIsTaskWindowActive] = useState(false);
+    const [isTaskEditActive, setIsTaskEditActive] = useState(false);
     const [isManageWindowActive, setIsManageWindowActive] = useState(false);
     const [filter, setFilter] = useState({ client: null, project: null });
     const [photoMode, setPhotoMode] = useState(false);
@@ -41,8 +42,10 @@ const App = () => {
     useKeyboardShortcuts(
         isManageWindowActive,
         isTaskWindowActive,
+        isTaskEditActive,
         setIsManageWindowActive,
         setIsTaskWindowActive,
+        setIsTaskEditActive,
         setSelectedDate
     );
 
@@ -74,6 +77,7 @@ const App = () => {
         update: async (updatedTask) => {
             await apiService.updateTask(updatedTask);
             await refreshData();
+            setIsTaskEditActive(false);
         },
         delete: async (taskId) => {
             await apiService.deleteTask(taskId);
@@ -117,6 +121,8 @@ const App = () => {
                                         clients={clients}
                                         onUpdateTasks={refreshData}
                                         onNewTask={() => setIsTaskWindowActive(true)}
+                                        isTaskEditActive={isTaskEditActive}
+                                        onEditTask={(flag) => setIsTaskEditActive(flag)}
                                         onUpdateTask={handleTaskOperations.update}
                                         onDeleteTask={handleTaskOperations.delete}
                                     />

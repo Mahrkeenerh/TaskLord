@@ -4,21 +4,19 @@ import { parseDate, formatDate } from '../utils/dateHelpers';
 export const useKeyboardShortcuts = (
     isManageWindowActive,
     isTaskWindowActive,
+    isTaskEditActive,
     setIsManageWindowActive,
     setIsTaskWindowActive,
+    setIsTaskEditActive,
     setSelectedDate
 ) => {
     useEffect(() => {
         const handleKeyPress = (e) => {
-            if (isManageWindowActive) {
+            if (isManageWindowActive || isTaskWindowActive || isTaskEditActive) {
                 if (e.key === 'Escape') {
-                    setIsManageWindowActive(false);
-                }
-                return;
-            }
-            if (isTaskWindowActive) {
-                if (e.key === 'Escape') {
-                    setIsTaskWindowActive(false);
+                    if (isManageWindowActive) setIsManageWindowActive(false);
+                    if (isTaskWindowActive) setIsTaskWindowActive(false);
+                    if (isTaskEditActive) setIsTaskEditActive(false);
                 }
                 return;
             }
@@ -45,5 +43,5 @@ export const useKeyboardShortcuts = (
 
         window.addEventListener('keydown', handleKeyPress);
         return () => window.removeEventListener('keydown', handleKeyPress);
-    }, [isManageWindowActive, isTaskWindowActive, setIsManageWindowActive, setIsTaskWindowActive, setSelectedDate]);
+    }, [isManageWindowActive, isTaskWindowActive, isTaskEditActive, setIsManageWindowActive, setIsTaskWindowActive, setIsTaskEditActive, setSelectedDate]);
 };

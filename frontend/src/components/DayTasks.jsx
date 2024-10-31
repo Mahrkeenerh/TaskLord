@@ -64,6 +64,8 @@ export const DayTasks = ({
     clients,
     onUpdateTasks,
     onNewTask,
+    isTaskEditActive,
+    onEditTask,
     onUpdateTask,
     onDeleteTask,
 }) => {
@@ -77,10 +79,21 @@ export const DayTasks = ({
         }
     };
 
+    const handleOnEditTask = (task) => {
+        onEditTask(true);
+        setEditingTask(task);
+    };
+
     const handleUpdateTask = async (updatedTask) => {
         await onUpdateTask(updatedTask);
         onUpdateTasks();
         setEditingTask(null);
+        onEditTask(false);
+    };
+
+    const handleCloseEdit = () => {
+        setEditingTask(null);
+        onEditTask(false);
     };
 
     return (
@@ -93,14 +106,14 @@ export const DayTasks = ({
                         key={task.id}
                         task={task}
                         project={projects.find(p => p.id === task.project_id)}
-                        onEdit={setEditingTask}
+                        onEdit={handleOnEditTask}
                         onDelete={handleDeleteTask}
                     />
                 ))}
             </div>
 
-            {editingTask && (
-                <Modal onClose={() => setEditingTask(null)}>
+            {editingTask && isTaskEditActive && (
+                <Modal onClose={handleCloseEdit}>
                     <TaskForm
                         selectedDate={selectedDate}
                         projects={projects}
