@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Trash2, Edit2 } from 'lucide-react';
+import { Trash2, Edit2, Eye, EyeOff } from 'lucide-react';
 
 const INITIAL_PROJECT_FORM = {
     id: '',
     name: '',
     client_id: '',
     color: '#3B82F6',
-    hourly_rate: ''
+    hourly_rate: '',
+    hidden: false
 };
 
 const INITIAL_CLIENT_FORM = {
@@ -47,7 +48,7 @@ const Label = ({ photoMode, children }) => {
     return <label className={className}>{children}</label>;
 };
 
-const ProjectList = ({ projects, photoMode, onEdit, onDelete }) => (
+const ProjectList = ({ projects, photoMode, onEdit, onDelete, onToggleVisibility }) => (
     <div className="grid gap-2">
         {projects.map(project => (
             <StyledCard key={project.id} photoMode={photoMode}>
@@ -60,7 +61,17 @@ const ProjectList = ({ projects, photoMode, onEdit, onDelete }) => (
                 </div>
                 <div className="flex items-center space-x-2">
                     <span className={photoMode ? "text-gray-800" : ""}>{project.hourly_rate}€/h</span>
-                    <button onClick={() => onEdit(project)} className="text-blue-600 hover:text-blue-500">
+                    <button
+                        onClick={() => onToggleVisibility(project)}
+                        className="text-gray-400 hover:text-gray-300"
+                        title={project.hidden ? "Show project" : "Hide project"}
+                    >
+                        {project.hidden ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                    <button
+                        onClick={() => onEdit(project)}
+                        className="text-blue-600 hover:text-blue-500"
+                    >
                         <Edit2 size={16} />
                     </button>
                     <button onClick={() => onDelete(project.id)} className="text-red-600 hover:text-red-500">
@@ -216,6 +227,16 @@ export const ProjectSettings = ({
     const [editingProject, setEditingProject] = useState(null);
     const [editingClient, setEditingClient] = useState(null);
 
+    const handleToggleVisibility = async (project) => {
+        const updatedProject = { ...project, hidden: !project.hidden };
+        await fetch(`/api/projects/${project.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedProject)
+        });
+        onProjectUpdate();
+    };
+
     const handleProjectSubmit = async (e) => {
         e.preventDefault();
         const endpoint = editingProject ? `/api/projects/${editingProject}` : '/api/projects';
@@ -300,6 +321,7 @@ export const ProjectSettings = ({
                             photoMode={photoMode}
                             onEdit={handleEditProject}
                             onDelete={handleDeleteProject}
+                            onToggleVisibility={handleToggleVisibility}
                         />
                     </div>
 

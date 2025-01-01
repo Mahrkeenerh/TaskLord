@@ -1,5 +1,6 @@
 export const filterProjects = (projects, filter) => {
     return projects.filter(project => {
+        if (project.hidden) return false;
         if (filter.project && project.id !== filter.project) return false;
         if (filter.client && project.client_id !== filter.client) return false;
         return true;

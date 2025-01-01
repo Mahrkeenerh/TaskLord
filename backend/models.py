@@ -51,6 +51,7 @@ class Project:
     client_id: str
     color: str
     hourly_rate: float
+    hidden: bool = False
     id: str = None
 
     def __post_init__(self):
@@ -64,7 +65,8 @@ class Project:
             "name": self.name,
             "client_id": self.client_id,
             "color": self.color,
-            "hourly_rate": self.hourly_rate
+            "hourly_rate": self.hourly_rate,
+            "hidden": self.hidden
         }
 
     def update(self, project):
@@ -72,6 +74,7 @@ class Project:
         self.client_id = project.client_id
         self.color = project.color
         self.hourly_rate = project.hourly_rate
+        self.hidden = project.hidden
 
 
 @dataclass

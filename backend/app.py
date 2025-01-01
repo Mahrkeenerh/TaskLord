@@ -70,7 +70,8 @@ def manage_projects():
         name=data['name'],
         client_id=data['client_id'],
         color=data['color'],
-        hourly_rate=float(data['hourly_rate'])
+        hourly_rate=float(data['hourly_rate']),
+        hidden=data.get('hidden', False)
     )
     storage.save_project(project)
     return jsonify({"status": "success", "id": project.id})
@@ -88,7 +89,8 @@ def manage_specific_project(project_id):
         name=data['name'],
         client_id=data['client_id'],
         color=data['color'],
-        hourly_rate=float(data['hourly_rate'])
+        hourly_rate=float(data['hourly_rate']),
+        hidden=data.get('hidden', False)
     )
     storage.update_project(project)
     return jsonify({"status": "success"})

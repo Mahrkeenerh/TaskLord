@@ -147,11 +147,10 @@ export const Calendar = ({
         if (!date) return [];
         const dateString = formatDate(date);
         return tasks.filter(task => {
+            const project = projects.find(p => p.id === task.project_id);
+            if (!project || project.hidden) return false;
             if (filter.project && task.project_id !== filter.project) return false;
-            if (filter.client) {
-                const project = projects.find(p => p.id === task.project_id);
-                if (project && project.client_id !== filter.client) return false;
-            }
+            if (filter.client && project.client_id !== filter.client) return false;
             return task.date === dateString;
         });
     }, [tasks, filter, projects]);
