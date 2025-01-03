@@ -37,7 +37,7 @@ export const Header = ({
             >
                 <option value="">All Projects</option>
                 {projects
-                    .filter(project => !filter.client || project.client_id === filter.client)
+                    .filter(project => !project.hidden && (!filter.client || project.client_id === filter.client))
                     .map(project => (
                         <option key={project.id} value={project.id}>{project.name}</option>
                     ))}
