@@ -45,7 +45,7 @@ export const TaskForm = ({
     useEffect(() => {
         if (formData.client_id) {
             const projectsForClient = projects.filter(
-                project => project.client_id === formData.client_id
+                project => project.client_id === formData.client_id && !project.hidden
             );
             setFilteredProjects(projectsForClient);
 
