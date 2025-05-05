@@ -1,10 +1,8 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
-from werkzeug.utils import secure_filename
-
-from models import Task, Project, Client
+from models import Client, Project, Task
 from storage import Storage
-
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 CORS(app)
@@ -148,4 +146,4 @@ def serve_logo(filename):
     return send_from_directory(storage.logos_path, filename)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=3002)
+    app.run(debug=True, port=3072)
