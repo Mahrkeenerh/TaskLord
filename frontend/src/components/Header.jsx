@@ -1,5 +1,5 @@
-import React from 'react';
 import { Camera } from 'lucide-react';
+import React from 'react';
 
 export const Header = ({
     filter,
@@ -13,7 +13,7 @@ export const Header = ({
     <>
         <header className="flex justify-between items-center mb-6 mt-4">
             <div className="flex items-center space-x-2">
-                <img src="/logo.png" alt="TaskLord Icon" className="w-8 h-8" />
+                <img src="/logo.png" alt="TaskLord Icon" className="w-14 h-14" />
                 <h1 className="tasklord-logo">TaskLord</h1>
             </div>
         </header>

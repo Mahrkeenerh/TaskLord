@@ -1,5 +1,5 @@
 import React from 'react';
-import { filterProjects, groupProjectsByClient, calculateProjectMetrics } from '../utils/summaries';
+import { calculateProjectMetrics, filterProjects, groupProjectsByClient } from '../utils/summaries';
 
 // Reusable components
 const ProjectCard = ({ project, hours, billing }) => (
