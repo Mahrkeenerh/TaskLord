@@ -36,26 +36,39 @@ const ProjectCard = ({ project, hours, billing }) => (
     </div>
 );
 
-const ClientSection = ({ client, projects, tasks, showClientName }) => (
-    <div className="space-y-2">
-        {showClientName && (
-            <div className="text-lg font-medium text-gray-800">
-                {client ? client.name : 'Unknown Client'}
-            </div>
-        )}
-        {projects.map(project => {
-            const { hours, billing } = calculateProjectMetrics(tasks, project);
-            return (
-                <ProjectCard
-                    key={project.id}
-                    project={project}
-                    hours={hours}
-                    billing={billing}
-                />
-            );
-        })}
-    </div>
-);
+const ClientSection = ({ client, projects, tasks, showClientName }) => {
+    // Filter out projects with zero hours
+    const projectsWithHours = projects.filter(project => {
+        const { hours } = calculateProjectMetrics(tasks, project);
+        return hours > 0;
+    });
+
+    // Don't render the section if no projects have hours
+    if (projectsWithHours.length === 0) {
+        return null;
+    }
+
+    return (
+        <div className="space-y-2">
+            {showClientName && (
+                <div className="text-lg font-medium text-gray-800">
+                    {client ? client.name : 'Unknown Client'}
+                </div>
+            )}
+            {projectsWithHours.map(project => {
+                const { hours, billing } = calculateProjectMetrics(tasks, project);
+                return (
+                    <ProjectCard
+                        key={project.id}
+                        project={project}
+                        hours={hours}
+                        billing={billing}
+                    />
+                );
+            })}
+        </div>
+    );
+};
 
 const TotalSummary = ({ hours, billing }) => (
     <div className="mt-6 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
