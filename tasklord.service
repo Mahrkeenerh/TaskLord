@@ -1,0 +1,16 @@
+[Unit]
+Description=TaskLord Application
+After=network.target
+
+[Service]
+Type=forking
+User=samo
+WorkingDirectory=/home/samo/Data/Pixel/TaskLord
+ExecStart=/bin/bash /home/samo/Data/Pixel/TaskLord/run.sh
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -41,10 +41,50 @@ npm install
 
 ## Running the Application
 
-Run the included `run.bat` file, which will:
+### Manual Start
+
+Run the included `run.sh` file, which will:
 1. Start the backend server (port 3002)
 2. Start the frontend development server (port 3001)
 3. Open the application at `http://localhost:3001`
+
+```bash
+./run.sh
+```
+
+### Auto-Start on Boot (Linux with systemd)
+
+To have TaskLord start automatically when your system boots:
+
+1. Install the systemd service:
+```bash
+sudo cp tasklord.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable tasklord.service
+sudo systemctl start tasklord.service
+```
+
+2. Check service status:
+```bash
+sudo systemctl status tasklord.service
+```
+
+3. View logs:
+```bash
+# System logs
+journalctl -u tasklord.service -f
+
+# Application logs
+tail -f logs/backend.log
+tail -f logs/frontend.log
+```
+
+4. Useful commands:
+```bash
+sudo systemctl stop tasklord.service    # Stop the service
+sudo systemctl restart tasklord.service # Restart the service
+sudo systemctl disable tasklord.service # Disable auto-start
+```
 
 ## Data Storage
 
