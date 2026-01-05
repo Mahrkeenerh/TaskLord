@@ -11,7 +11,7 @@
   },
 
   "network": {
-    "port": 3072,
+    "port": 3000,
     "health": "/health",
     "ui_port": 3000
   },

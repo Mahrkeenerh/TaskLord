@@ -1,13 +1,17 @@
+import os
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from models import Client, Project, Task
 from storage import Storage
 from werkzeug.utils import secure_filename
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=None)
 CORS(app)
 
 storage = Storage('data')
+
+# Path to production frontend build
+FRONTEND_BUILD = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'frontend', 'build'))
 
 
 @app.route('/api/tasks/<year>/<month>', methods=['GET'])
@@ -166,5 +170,23 @@ def health():
     """Health check endpoint for service monitoring."""
     return jsonify({"status": "ok"})
 
+
+# Serve React production build static assets
+@app.route('/static/<path:filename>')
+def serve_static(filename):
+    """Serve static assets from the React build."""
+    return send_from_directory(os.path.join(FRONTEND_BUILD, 'static'), filename)
+
+
+# Serve React production build (catch-all for SPA routing)
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_frontend(path):
+    """Serve frontend files and handle SPA routing."""
+    if path and os.path.exists(os.path.join(FRONTEND_BUILD, path)):
+        return send_from_directory(FRONTEND_BUILD, path)
+    return send_from_directory(FRONTEND_BUILD, 'index.html')
+
+
 if __name__ == '__main__':
-    app.run(debug=True, port=3072)
+    app.run(debug=False, port=3000)

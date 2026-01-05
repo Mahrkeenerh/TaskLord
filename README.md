@@ -43,14 +43,13 @@ npm install
 
 ### Manual Start
 
-Run the included `run.sh` file, which will:
-1. Start the backend server (port 3002)
-2. Start the frontend development server (port 3001)
-3. Open the application at `http://localhost:3001`
+Run the included `run.sh` file to start the server:
 
 ```bash
 ./run.sh
 ```
+
+Then open `http://localhost:3000` in your browser.
 
 ### Auto-Start on Login (Linux with systemd)
 

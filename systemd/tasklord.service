@@ -1,0 +1,15 @@
+[Unit]
+Description=TaskLord Time Tracking Application
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/samo/Data/Pixel/TaskLord
+ExecStart=/bin/bash /home/samo/Data/Pixel/TaskLord/run.sh
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

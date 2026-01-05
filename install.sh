@@ -32,6 +32,10 @@ echo "Installing frontend dependencies..."
 cd "$SCRIPT_DIR/frontend"
 npm install --silent
 
+# Build frontend for production
+echo "Building frontend..."
+npm run build
+
 # Generate systemd service file with correct paths
 echo "Generating systemd service file..."
 mkdir -p "$SCRIPT_DIR/systemd"
