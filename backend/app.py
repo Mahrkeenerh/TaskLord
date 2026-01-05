@@ -161,5 +161,10 @@ def serve_logo(filename):
     """Serve client logo files."""
     return send_from_directory(storage.logos_path, filename)
 
+@app.route('/health')
+def health():
+    """Health check endpoint for service monitoring."""
+    return jsonify({"status": "ok"})
+
 if __name__ == '__main__':
     app.run(debug=True, port=3072)

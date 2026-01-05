@@ -52,38 +52,34 @@ Run the included `run.sh` file, which will:
 ./run.sh
 ```
 
-### Auto-Start on Boot (Linux with systemd)
+### Auto-Start on Login (Linux with systemd)
 
-To have TaskLord start automatically when your system boots:
+To have TaskLord start automatically when you log in:
 
-1. Install the systemd service:
+1. Run the install script:
 ```bash
-sudo cp tasklord.service /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl enable tasklord.service
-sudo systemctl start tasklord.service
+./install.sh
 ```
 
-2. Check service status:
+2. Enable and start the service:
 ```bash
-sudo systemctl status tasklord.service
+systemctl --user enable tasklord
+systemctl --user start tasklord
 ```
 
-3. View logs:
+3. Check status:
 ```bash
-# System logs
-journalctl -u tasklord.service -f
-
-# Application logs
-tail -f logs/backend.log
-tail -f logs/frontend.log
+systemctl --user status tasklord
 ```
 
-4. Useful commands:
+4. View logs:
 ```bash
-sudo systemctl stop tasklord.service    # Stop the service
-sudo systemctl restart tasklord.service # Restart the service
-sudo systemctl disable tasklord.service # Disable auto-start
+journalctl --user -u tasklord -f
+```
+
+5. To uninstall:
+```bash
+./uninstall.sh
 ```
 
 ## Data Storage

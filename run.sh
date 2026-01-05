@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# Set working directory
-cd /home/samo/Data/Pixel/TaskLord
+# Set working directory to script location
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
 
 # Create logs directory if it doesn't exist
 mkdir -p logs
