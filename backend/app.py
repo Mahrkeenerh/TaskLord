@@ -64,11 +64,19 @@ def manage_projects():
         return jsonify(storage.load_projects())
 
     data = request.json
+
+    # Handle rate_changes
+    if 'rate_changes' in data:
+        rate_changes = data['rate_changes']
+    else:
+        # Legacy support: convert single hourly_rate to rate_changes
+        rate_changes = [{'hourly_rate': float(data['hourly_rate']), 'effective_date': None}]
+
     project = Project(
         name=data['name'],
         client_id=data['client_id'],
         color=data['color'],
-        hourly_rate=float(data['hourly_rate']),
+        rate_changes=rate_changes,
         hidden=data.get('hidden', False)
     )
     storage.save_project(project)
@@ -82,12 +90,20 @@ def manage_specific_project(project_id):
         return jsonify({"status": "success"})
 
     data = request.json
+
+    # Handle rate_changes
+    if 'rate_changes' in data:
+        rate_changes = data['rate_changes']
+    else:
+        # Legacy support: convert single hourly_rate to rate_changes
+        rate_changes = [{'hourly_rate': float(data['hourly_rate']), 'effective_date': None}]
+
     project = Project(
         id=project_id,
         name=data['name'],
         client_id=data['client_id'],
         color=data['color'],
-        hourly_rate=float(data['hourly_rate']),
+        rate_changes=rate_changes,
         hidden=data.get('hidden', False)
     )
     storage.update_project(project)

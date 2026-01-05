@@ -70,10 +70,12 @@ class Storage:
 
             project = self._get_project(project_id)
             hours = task.hours
+            # Use date-aware rate lookup
+            rate = project.get_rate_for_date(task.date)
             summary[client_id]["projects"][project_id]["total_hours"] += hours
-            summary[client_id]["projects"][project_id]["total_amount"] += hours * project.hourly_rate
+            summary[client_id]["projects"][project_id]["total_amount"] += hours * rate
             summary[client_id]["total_hours"] += hours
-            summary[client_id]["total_amount"] += hours * project.hourly_rate
+            summary[client_id]["total_amount"] += hours * rate
 
         self.data["summary"] = summary
 
@@ -159,16 +161,10 @@ class Storage:
         end_of_month = (start_of_month.replace(month=start_of_month.month % 12 + 1, day=1) - timedelta(days=1))
         end_of_month = end_of_month.replace(year=start_of_month.year)
 
-        current_date = start_of_month - timedelta(days=1)
+        current_date = start_of_month
 
         while current_date <= end_of_month:
-            if current_date < task_date:
-                current_date += timedelta(days=1)
-                continue
-
-            current_date += timedelta(days=1)
-
-            if self._should_add_recurring_task(task, current_date):
+            if current_date >= task_date and self._should_add_recurring_task(task, current_date):
                 new_task = Task(
                     id=f"{task.id}_{current_date.strftime('%Y-%m-%d')}",
                     project_id=task.project_id,
@@ -180,6 +176,8 @@ class Storage:
                     recurring=task.recurring
                 )
                 self.data['tasks'].append(new_task)
+
+            current_date += timedelta(days=1)
 
     def _apply_recurring_tasks(self):
         """Apply all recurring tasks to current month."""
