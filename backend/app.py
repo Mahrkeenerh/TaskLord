@@ -1,9 +1,21 @@
 import os
+import logging
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from models import Client, Project, Task
 from storage import Storage
 from werkzeug.utils import secure_filename
+
+
+class HealthCheckFilter(logging.Filter):
+    """Filter to exclude health check requests from logs."""
+    def filter(self, record):
+        message = record.getMessage()
+        return '/health' not in message
+
+
+# Apply filter to Werkzeug logger
+logging.getLogger('werkzeug').addFilter(HealthCheckFilter())
 
 app = Flask(__name__, static_folder=None)
 CORS(app)
