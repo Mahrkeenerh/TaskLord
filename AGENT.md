@@ -1,7 +1,7 @@
 # TaskLord - Agent Context
 
 ## Overview
-TaskLord is a time tracking web application with a React frontend (port 3000) and Flask backend (port 3072).
+TaskLord is a time tracking web application. Flask backend (port 3000) serves both the API and the static React frontend build.
 
 ## Quick Commands
 
@@ -19,23 +19,21 @@ systemctl --user status tasklord
 ```
 
 ## Architecture
-- **Frontend**: React app on port 3000
-- **Backend**: Flask API on port 3072
+- **Backend**: Flask API on port 3000 (also serves static React build)
 - **Data**: File-based JSON storage in repository
 
 ## Troubleshooting
 
 ### Service won't start
 1. Check logs: `journalctl --user -u tasklord -n 50`
-2. Verify ports available: `lsof -i :3000` and `lsof -i :3072`
+2. Verify port available: `lsof -i :3000`
 3. Check if venv exists: `ls backend/venv`
-4. Test health endpoint: `curl http://localhost:3072/health`
+4. Test health endpoint: `curl http://localhost:3000/health`
 
 ### Port already in use
 ```bash
 # Find process using port
 lsof -i :3000
-lsof -i :3072
 # Kill if needed
 kill -9 <PID>
 ```
